@@ -1,13 +1,25 @@
 const SlackBot = require("slackbots");
 const fs = require("fs");
 const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
-const piblaster = require('pi-blaster.js');
 console.log("Starting...");
 
-piblaster.setPwm(8, 0 );
-setTimeout(function(){
-    piblaster.setPwm(8, 0.5);
-},500);
+const Gpio = require('pigpio').Gpio;
+ 
+const motor = new Gpio(8, {mode: Gpio.OUTPUT});
+ 
+let pulseWidth = 1000;
+let increment = 100;
+ 
+setInterval(() => {
+  motor.servoWrite(pulseWidth);
+ 
+  pulseWidth += increment;
+  if (pulseWidth >= 2000) {
+    increment = -100;
+  } else if (pulseWidth <= 1000) {
+    increment = 100;
+  }
+}, 1000);
 
 // create a bot
 var bot = new SlackBot({
