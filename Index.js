@@ -1,8 +1,10 @@
 const SlackBot = require("slackbots");
 const fs = require("fs");
 
-const slackToken = fs.readFileSync("./.slackToken", "utf8");
+const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
 console.log(slackToken);
+console.log(slackToken.toUpperCase());
+console.log(slackToken.toLowerCase());
 // create a bot
 var bot = new SlackBot({
     token: slackToken, // Add a bot https://my.slack.com/services/new/bot and put the token 
