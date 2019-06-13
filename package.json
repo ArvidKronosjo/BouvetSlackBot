@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "Node index.js"
+    "start": "node Index.js"
   },
   "author": "Arvid Kronosjö",
   "license": "MIT",
