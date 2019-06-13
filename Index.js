@@ -8,8 +8,8 @@ let motor = new Gpio(14, {mode: Gpio.OUTPUT});
 console.log("Starting...");
 
 
-const fullSwing = 2000;
-const noSwing = 500;
+const fullSwing = 500;
+const noSwing = 2000;
 
 setTimeout(function(){
     motor.servoWrite(noSwing);
