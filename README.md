@@ -1,0 +1,2 @@
+# BouvetSlackBot
+Simple slackbot
