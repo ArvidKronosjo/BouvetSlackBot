@@ -5,7 +5,7 @@ console.log("Starting...");
 
 const Gpio = require('pigpio').Gpio;
  
-const motor = new Gpio(8, {mode: Gpio.OUTPUT});
+const motor = new Gpio(14, {mode: Gpio.OUTPUT});
  
 let pulseWidth = 1000;
 let increment = 100;
@@ -46,8 +46,6 @@ bot.on('start', function() {
         if(data.type=="message" && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
         {
             console.log("Move Servo!");
-            servo.setDegree(175);
-            setTimeout(() => servo.setDegree(5),1500);
         }
         else
         {
