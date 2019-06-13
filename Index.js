@@ -6,11 +6,13 @@ const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
 const Gpio = require('pigpio').Gpio;
 let motor = new Gpio(14, {mode: Gpio.OUTPUT});
 console.log("Starting...");
-motor.servoWrite(noSwing);
-console.log("Data written to servo...");
+
 
 const fullSwing = 500;
 const noSwing = 100;
+
+motor.servoWrite(noSwing);
+console.log("Data written to servo...");
 
 
 // create a bot
