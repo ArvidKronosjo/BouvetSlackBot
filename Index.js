@@ -8,11 +8,14 @@ let motor = new Gpio(14, {mode: Gpio.OUTPUT});
 console.log("Starting...");
 
 
-const fullSwing = 500;
-const noSwing = 100;
+const fullSwing = 2000;
+const noSwing = 500;
 
-motor.servoWrite(noSwing);
-console.log("Data written to servo...");
+setTimeout(function(){
+    motor.servoWrite(noSwing);
+    console.log("Data written to servo...");
+
+},1500);
 
 
 // create a bot
