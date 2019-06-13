@@ -4,11 +4,11 @@ const fs = require("fs");
 const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
 
 const Gpio = require('pigpio').Gpio;
-const motor = new Gpio(14, {mode: Gpio.OUTPUT});
+let motor = new Gpio(14, {mode: Gpio.OUTPUT});
 console.log("Starting...");
  
 
-const fullSwing = 2000;
+const fullSwing = 500;
 const noSwing = 100;
 
 
