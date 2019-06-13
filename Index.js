@@ -33,7 +33,7 @@ bot.on('start', function() {
     
     bot.on('message', function(data) {
         // all ingoing events https://api.slack.com/rtm
-        if(data.type=="message" && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
+        if(data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
         {
             console.log("Move Servo!");
             motor.servoWrite(fullSwing);
