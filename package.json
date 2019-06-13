@@ -9,6 +9,7 @@
   "author": "Arvid Kronosjö",
   "license": "MIT",
   "dependencies": {
+    "pi-servo": "^1.0.2",
     "slackbots": "^1.2.0"
   }
 }

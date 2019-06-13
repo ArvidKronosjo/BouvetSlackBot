@@ -1,10 +1,16 @@
 const SlackBot = require("slackbots");
 const fs = require("fs");
-
+const PiServo = require('pi-servo');
 const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
-console.log(slackToken);
-console.log(slackToken.toUpperCase());
-console.log(slackToken.toLowerCase());
+console.log("Starting...");
+
+ 
+// pass the GPIO number
+var servo = new PiServo(8); 
+ 
+servo.open().then(function(){  
+  servo.setDegree(5); // 0 - 180
+});
 // create a bot
 var bot = new SlackBot({
     token: slackToken, // Add a bot https://my.slack.com/services/new/bot and put the token 
@@ -29,11 +35,13 @@ bot.on('start', function() {
         // all ingoing events https://api.slack.com/rtm
         if(data.type=="message" && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
         {
-            console.log("Execute arduino code!");
+            console.log("Move Servo!");
+            servo.setDegree(175);
+            setTimeout(() => servo.setDegree(5),1500);
         }
         else
         {
-            console.log(data);
+            //console.log(data);
         }
     });
     //bot.postMessageToUser('oskar.kronosjo', 'hej').then(function(data) {
