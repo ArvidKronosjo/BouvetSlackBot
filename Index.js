@@ -1,29 +1,14 @@
 const SlackBot = require("slackbots");
 const fs = require("fs");
-const piblaster = require('pi-servo-blaster.js'); 
 const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
+const piblaster = require('pi-blaster.js');
 console.log("Starting...");
 
- 
-// pass the GPIO number
+piblaster.setPwm(8, 0 );
+setTimeout(function(){
+    piblaster.setPwm(8, 0.5);
+},500);
 
-function angleToPercent(angle) {
-  return Math.floor((angle/180) * 100);
-}
-
-var curAngle = 0;
-var direction = 1;
-setInterval(() => {
-  piblaster.setServoPwm("P1-11", angleToPercent(curAngle) + "%");
-  console.log("Setting angle at: ", curAngle, angleToPercent(curAngle));
-  curAngle += direction;
-  // Change direction when it exceeds the max angle.
-  if (curAngle >= 180) {
-    direction = -1;
-  } else if (curAngle <= 0) {
-    direction = 1;
-  }
-}, 10);
 // create a bot
 var bot = new SlackBot({
     token: slackToken, // Add a bot https://my.slack.com/services/new/bot and put the token 
