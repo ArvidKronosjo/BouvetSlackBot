@@ -1,0 +1,14 @@
+{
+  "name": "slackbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "Node index.js"
+  },
+  "author": "Arvid Kronosjö",
+  "license": "MIT",
+  "dependencies": {
+    "slackbots": "^1.2.0"
+  }
+}
