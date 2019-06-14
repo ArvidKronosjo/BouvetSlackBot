@@ -1,7 +1,7 @@
 
 const SlackBot = require("slackbots");
 const fs = require("fs");
-const slackToken = fs.readFileSync("./.slackToken", "utf8").trim();
+const slackToken = fs.readFileSync("/etc/.slackToken", "utf8").trim();
 
 const Gpio = require('pigpio').Gpio;
 let motor = new Gpio(14, {mode: Gpio.OUTPUT});
@@ -16,7 +16,7 @@ setTimeout(function(){
     console.log("Data written to servo...");
 
 },1500);
-
+console.log(slackToken);
 
 // create a bot
 var bot = new SlackBot({
@@ -24,13 +24,15 @@ var bot = new SlackBot({
     name: 'Arrebot'
 });
 
-
+console.log("connecting to slack");
 bot.on('start', function() {
+    console.log("connected?");
     // more information about additional params https://api.slack.com/methods/chat.postMessage
     var params = {
         icon_emoji: ':arvid:'
     };
-    
+    //bot.postMessageToUser('arvid.kronosjo', 'Du kan vara en andvändare!', params);    
+    console.log('aaaaaaaaaaaaaaaaa');    
     bot.on('message', function(data) {
         // all ingoing events https://api.slack.com/rtm
         if(data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
