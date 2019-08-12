@@ -9,8 +9,6 @@
   "author": "Arvid Kronosjö",
   "license": "MIT",
   "dependencies": {
-    "pi-blaster.js": "^0.1.3",
-    "pigpio": "^1.2.2",
     "slackbots": "^1.2.0"
   }
 }
