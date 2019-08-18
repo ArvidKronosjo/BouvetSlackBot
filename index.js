@@ -2,7 +2,7 @@
 console.log("initializing...");
 const SlackBot = require("slackbots");
 const fs = require("fs");
-const slackToken = fs.readFileSync("./etc/.slackToken", "utf8").trim();
+const slackToken = fs.readFileSync("/etc/.slackToken", "utf8").trim();
 
 const Gpio = require('pigpio').Gpio;
 
@@ -25,6 +25,8 @@ setInterval(function() {
     }
     catch(exception)
     {
+        console.log("Crash. Exception is below");
+        console.error(exception);
         hasCrashed=true;
         isRunning=false;
     }
