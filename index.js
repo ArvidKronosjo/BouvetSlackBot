@@ -9,8 +9,11 @@ const Gpio = require('pigpio').Gpio;
 var isRunning = false;
 var hasCrashed = false;
 
-startBot();
-isRunning=true;
+setTimeout(function(){
+    startBot();
+    isRunning=true;
+},1000*30);
+
 
 setInterval(function() {
     try{
