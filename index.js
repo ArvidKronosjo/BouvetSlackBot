@@ -9,6 +9,8 @@ const Gpio = require('pigpio').Gpio;
 var isRunning = false;
 var hasCrashed = false;
 
+startBot();
+isRunning=true;
 
 setInterval(function() {
     try{
@@ -17,6 +19,9 @@ setInterval(function() {
             startBot();
             isRunning=true;
         }
+        else{
+            console.log("No crash detected");
+        }
     }
     catch(exception)
     {
@@ -24,7 +29,7 @@ setInterval(function() {
         isRunning=false;
     }
     
-},1000)
+},10*60*1000);
 
 
 function startBot() {
@@ -75,6 +80,7 @@ function startBot() {
             console.log("Crash");
             console.log(data);
             hasCrashed=true;
+            isRunning=false;
         })
     });
 }
