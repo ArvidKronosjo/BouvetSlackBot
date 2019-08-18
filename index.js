@@ -1,7 +1,8 @@
 
+console.log("initializing...");
 const SlackBot = require("slackbots");
 const fs = require("fs");
-const slackToken = fs.readFileSync("/etc/.slackToken", "utf8").trim();
+const slackToken = fs.readFileSync("./etc/.slackToken", "utf8").trim();
 
 const Gpio = require('pigpio').Gpio;
 let motor = new Gpio(14, {mode: Gpio.OUTPUT});

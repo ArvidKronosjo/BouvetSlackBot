@@ -9,6 +9,7 @@
   "author": "Arvid Kronosjö",
   "license": "MIT",
   "dependencies": {
+    "pigpio": "^1.2.3",
     "slackbots": "^1.2.0"
   }
 }
