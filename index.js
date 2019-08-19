@@ -89,7 +89,7 @@ function startBot() {
                 // all ingoing events https://api.slack.com/rtm
                 if(data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
                 {
-                    console.log("Move Servo!");
+                    console.log("Move Servo 1!");
                     motor.servoWrite(fullSwing);
                     setTimeout(function()
                     {
@@ -97,20 +97,22 @@ function startBot() {
                         setTimeout(function()
                         {
                             motor.servoWrite(fullSwing);
+                            console.log("Move Servo 2!");
                             setTimeout(function()
                             {
                                 motor.servoWrite(noSwing);
                                 setTimeout(function()
                                 {
                                     motor.servoWrite(fullSwing);
+                                    console.log("Move Servo 3!");
                                     setTimeout(function()
                                     {
                                         motor.servoWrite(noSwing);
-                                    },500);
-                                },500);
-                            },500);
-                        },500);
-                    },500);
+                                    },1000);
+                                },1000);
+                            },1000);
+                        },1000);
+                    },1000);
                 }
             });
             bot.on("error",function(data){
