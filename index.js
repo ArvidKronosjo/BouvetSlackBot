@@ -94,6 +94,22 @@ function startBot() {
                     setTimeout(function()
                     {
                         motor.servoWrite(noSwing);
+                        setTimeout(function()
+                        {
+                            motor.servoWrite(fullSwing);
+                            setTimeout(function()
+                            {
+                                motor.servoWrite(noSwing);
+                                setTimeout(function()
+                                {
+                                    motor.servoWrite(fullSwing);
+                                    setTimeout(function()
+                                    {
+                                        motor.servoWrite(noSwing);
+                                    },500);
+                                },500);
+                            },500);
+                        },500);
                     },500);
                 }
             });
