@@ -2,14 +2,29 @@
 console.log("initializing...");
 const SlackBot = require("slackbots");
 const fs = require("fs");
-const slackToken = fs.readFileSync("/etc/.slackToken", "utf8").trim();
+var slackToken = "";
+var Gpio = {};
+if(process.platform == "win32")
+{
+    console.log("Windows detected");
+    slackToken = fs.readFileSync("./etc/.slackToken", "utf8").trim();
+    Gpio = function(){this.servoWrite = function(){}};
+}
+else
+{
+    console.log("Linux detected");
+    Gpio = require('pigpio').Gpio;
+    slackToken = fs.readFileSync("/etc/.slackToken", "utf8").trim();
+}
 
-const Gpio = require('pigpio').Gpio;
+
+//
 
 var isRunning = false;
 var hasCrashed = false;
-
+console.log("Connecting in 30 seconds");
 setTimeout(function(){
+    
     startBot();
     isRunning=true;
 },1000*30);
@@ -21,6 +36,7 @@ setInterval(function() {
         {
             startBot();
             isRunning=true;
+            hasCrashed=false;
         }
         else{
             console.log("No crash detected");
@@ -50,7 +66,7 @@ function startBot() {
         console.log("Data written to servo...");
 
     },1500);
-    console.log(slackToken);
+    //console.log(slackToken);
 
     // create a bot
     var bot = new SlackBot({
@@ -60,32 +76,46 @@ function startBot() {
 
     console.log("connecting to slack");
     bot.on('start', function() {
-        console.log("connected to slack");
-        // more information about additional params https://api.slack.com/methods/chat.postMessage
-        var params = {
-            icon_emoji: ':arvid:'
-        };
-        //bot.postMessageToUser('arvid.kronosjo', 'Du kan vara en andvändare!', params);    
-        console.log('aaaaaaaaaaaaaaaaa');    
-        bot.on('message', function(data) {
-            
-            // all ingoing events https://api.slack.com/rtm
-            if(data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
-            {
-                console.log("Move Servo!");
-                motor.servoWrite(fullSwing);
-                setTimeout(function()
+        try
+        {
+            console.log("connected to slack");
+            // more information about additional params https://api.slack.com/methods/chat.postMessage
+            var params = {
+                icon_emoji: ':arvid:'
+            };
+            //bot.postMessageToUser('arvid.kronosjo', 'Du kan vara en andvändare!', params);    
+            bot.on('message', function(data) {
+                
+                // all ingoing events https://api.slack.com/rtm
+                if(data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
                 {
-                    motor.servoWrite(noSwing);
-                },500);
-            }
-            bot.disconnect=true;
-        });
-        bot.on("error",function(data){
+                    console.log("Move Servo!");
+                    motor.servoWrite(fullSwing);
+                    setTimeout(function()
+                    {
+                        motor.servoWrite(noSwing);
+                    },500);
+                }
+            });
+            bot.on("error",function(data){
+                console.log("Connection crashed. Restarting soon...");
+                console.log(data);
+                hasCrashed=true;
+                isRunning=false;
+            });
+            bot.on("close",function(data){
+                console.log("Connection closed. Restarting soon...");
+                console.log(data);
+                hasCrashed=true;
+                isRunning=false;
+            })
+        }
+        catch(exception)
+        {
             console.log("Crash");
-            console.log(data);
+            console.log(exception);
             hasCrashed=true;
             isRunning=false;
-        })
+        }
     });
 }
