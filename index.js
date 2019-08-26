@@ -4,11 +4,13 @@ const SlackBot = require("slackbots");
 const fs = require("fs");
 var slackToken = "";
 var Gpio = {};
+var isWindows = false;
 if(process.platform == "win32")
 {
     console.log("Windows detected");
     slackToken = fs.readFileSync("./etc/.slackToken", "utf8").trim();
     Gpio = function(){this.servoWrite = function(){}};
+    isWindows=true;
 }
 else
 {
@@ -17,17 +19,18 @@ else
     slackToken = fs.readFileSync("/etc/.slackToken", "utf8").trim();
 }
 
+var startDelay = isWindows ? 0 : 30*1000;
 
 //
 
 var isRunning = false;
 var hasCrashed = false;
-console.log("Connecting in 30 seconds");
+console.log("Connecting in " + (startDelay/1000) + " seconds");
 setTimeout(function(){
     
     startBot();
     isRunning=true;
-},1000*30);
+},startDelay);
 
 
 setInterval(function() {
