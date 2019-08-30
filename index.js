@@ -112,11 +112,11 @@ function startBot() {
                                     setTimeout(function()
                                     {
                                         motor.servoWrite(noSwing);
-                                    },750);
-                                },750);
-                            },750);
-                        },750);
-                    },750);
+                                    },500);
+                                },1500);
+                            },500);
+                        },1500);
+                    },500);
                 }
             });
             bot.on("error",function(data){
