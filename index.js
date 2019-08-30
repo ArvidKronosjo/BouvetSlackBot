@@ -61,7 +61,7 @@ function startBot() {
     let motor = new Gpio(14, {mode: Gpio.OUTPUT});
 
 
-    const fullSwing = 1000;
+    const fullSwing = 500;
     const noSwing = 1500;
 
     setTimeout(function(){
@@ -112,11 +112,11 @@ function startBot() {
                                     setTimeout(function()
                                     {
                                         motor.servoWrite(noSwing);
-                                    },500);
-                                },500);
-                            },500);
-                        },500);
-                    },500);
+                                    },1000);
+                                },1000);
+                            },1000);
+                        },1000);
+                    },1000);
                 }
             });
             bot.on("error",function(data){
