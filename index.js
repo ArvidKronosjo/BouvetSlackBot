@@ -62,7 +62,7 @@ function startBot() {
 
 
     const fullSwing = 1000;
-    const noSwing = 1750;
+    const noSwing = 1900;
 
     setTimeout(function(){
         motor.servoWrite(noSwing);
@@ -112,11 +112,11 @@ function startBot() {
                                     setTimeout(function()
                                     {
                                         motor.servoWrite(noSwing);
-                                    },1000);
-                                },1000);
-                            },1000);
-                        },1000);
-                    },1000);
+                                    },750);
+                                },750);
+                            },750);
+                        },750);
+                    },750);
                 }
             });
             bot.on("error",function(data){
