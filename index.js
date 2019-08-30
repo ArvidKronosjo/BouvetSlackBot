@@ -61,8 +61,8 @@ function startBot() {
     let motor = new Gpio(14, {mode: Gpio.OUTPUT});
 
 
-    const fullSwing = 500;
-    const noSwing = 2000;
+    const fullSwing = 1000;
+    const noSwing = 1500;
 
     setTimeout(function(){
         motor.servoWrite(noSwing);
@@ -90,7 +90,8 @@ function startBot() {
             bot.on('message', function(data) {
                 
                 // all ingoing events https://api.slack.com/rtm
-                if(data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1)
+				//console.log(data);
+                if((data.type=="message" && data.text!=undefined && data.text.toLowerCase().indexOf('deal won! :tada:')!=-1) || hasDealWonAttachment(data))
                 {
                     console.log("Move Servo 1!");
                     motor.servoWrite(fullSwing);
@@ -111,11 +112,11 @@ function startBot() {
                                     setTimeout(function()
                                     {
                                         motor.servoWrite(noSwing);
-                                    },1000);
-                                },1000);
-                            },1000);
-                        },1000);
-                    },1000);
+                                    },500);
+                                },500);
+                            },500);
+                        },500);
+                    },500);
                 }
             });
             bot.on("error",function(data){
@@ -129,7 +130,7 @@ function startBot() {
                 console.log(data);
                 hasCrashed=true;
                 isRunning=false;
-            })
+            });
         }
         catch(exception)
         {
@@ -139,4 +140,30 @@ function startBot() {
             isRunning=false;
         }
     });
+}
+
+function hasDealWonAttachment(data)
+{
+	try{
+		if(data.attachments!=undefined || data.attachments!=null)
+		{
+			if(data.attachments.length==null || data.attachments.length==undefined)
+			{
+				return false;
+			}
+			for(var i=0;i!=data.attachments.length;i++)
+			{
+				var fallbackText = data.attachments[i].fallback;
+				if(fallbackText!=undefined && fallbackText.toLowerCase().indexOf('deal won! :tada:')!=-1)
+				{
+					return true;
+				}
+			}
+		}
+	}
+	catch(exception)
+	{
+		return false;
+	}
+	return false;
 }
